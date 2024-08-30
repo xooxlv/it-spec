@@ -1,0 +1,38 @@
+<header class="bg-dark py-3">
+  <nav class="navbar navbar-expand-lg navbar-dark container">
+    <a class="navbar-brand" href="#">
+      <img data-original="{{ logo_url }}" alt="" src="{{ logo_url }}">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Главная</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="services.html">Услуги</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">О нас</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="scrollToFooter()">Контакты</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container pt-5 mt-5">
+    <div class="row">
+      <div class="col-12 mt-5">
+        <h1 class="text-center text-white big-title mb-5">{{ header_title }}</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mb-5">
+        <a class="btn btn-primary site-btn mb-5" href="chat.html">Получить консультацию</a>
+      </div>
+    </div>
+  </div>
+</header>
