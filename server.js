@@ -7,7 +7,6 @@ const app = express();
 const host = '127.0.0.1';
 const port = 80;
 
-// Устанавливаем Handlebars в качестве шаблонизатора и регистрируем частичные шаблоны
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -55,17 +54,12 @@ const developer_activities = [
 ];
 
 app.get('/', (req, res) => {
+
     res.render('index', {
-        title: 'Услуги промышленного 3D сканирования',
-        logo_url: 'https://static.tildacdn.com/tild6163-6632-4530-b836-353966396362/Group_7120.svg',
-        header_title: 'УСЛУГИ ПРОМЫШЛЕННОГО 3D СКАНИРОВАНИЯ, МОДЕЛИРОВАНИЯ И ПЕЧАТИ',
+        title: 'Главная',
+        header_title: 'Услуги разработки, установки и наладки программного обеспечения, консультации',
         activity_title: 'Деятельность разработчиков программного обеспечения',
-        activities: developer_activities,
-        company_name: 'ООО "РД-СПЕЦАВТОМАТИКА"',
-        company_inn: 'ИНН 4027134030',
-        email: 'info@rdspec.ru',
-        phone: '8(800) 250 29 88',
-        address: '248000, Калужская область, г. Калуга, пер. Старообрядческий, дом 9, офис 176'
+        activities: developer_activities
     });
 });
 
