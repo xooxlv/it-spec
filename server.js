@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const hbs = require('hbs');
 const path = require('path');
+const { title } = require('process');
 
 const app = express();
 const host = '127.0.0.1';
@@ -14,7 +15,7 @@ hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 app.use(express.static('static'));
 
-const developer_activities = [
+developer_activities = [
     {
         'service_name': 'Разработка программного обеспечения',
         'img_path' : 'img/program_code.jpg',
@@ -53,15 +54,77 @@ const developer_activities = [
     }
 ];
 
-app.get('/', (req, res) => {
+acitvityes = {
+    title : 'Деятельность разработчиков программного обеспечения',
+    list : developer_activities
+}
 
+
+persons = [
+    {
+        'name' : 'Иван Иванов',
+        'about' : 'CEO. Специализируется на стратегии и управлении проектами. Опыт более 15 лет в IT-сфере.',
+        'img' : 'img/seo.png'
+    },
+    {
+        'name' : 'Анна Смирнова',
+        'about' : 'Технический директор. Эксперт в разработке программного обеспечения и архитектуре систем. Более 10 лет опыта.',
+        'img' : 'img/proger_women.png'
+    },
+    {
+        'name' : 'Сергей Петров',
+        'about' : 'Главный разработчик. Специализируется на веб-технологиях и интеграции систем. Опыт работы более 8 лет.',
+        'img' : 'img/main_proger.png'
+    }
+];
+
+offices = [
+    {
+        img: 'img/moscow_office.jpg',
+        name: 'Офис в Калуге',
+        about: 'Наш главный офис находится в центре Калуги, где работают наши ведущие специалисты и управленцы.'
+    },
+    {
+        img: 'img/sbp_office.jpg',
+        name : 'Офис в Санкт-Петербурге',
+        about : 'Наш офис в Санкт-Петербурге специализируется на разработке и поддержке программного обеспечения для наших клиентов в северной столице.'
+    }
+    
+]
+
+about = {
+    company : {
+        title : 'О нас',
+        first_tex_entry:  'Мы – команда профессионалов, объединенных общей целью: предоставление высококачественных IT-услуг для бизнеса и частных клиентов. Наша компания специализируется на разработке программного обеспечения, установке и настройке систем, а также интеграции сторонних сервисов.',
+        second_text_entry : 'Мы гордимся тем, что можем предложить уникальные решения, отвечающие самым высоким стандартам качества и безопасности. Наша команда имеет богатый опыт в различных областях IT и использует передовые технологии для достижения наилучших результатов.'
+    },
+    employers : {
+        title : 'Наша команда',
+        list : persons
+    },
+    offices : {
+        title : 'Наши офисы',
+        list: offices
+    }
+}
+
+
+app.get('/', (req, res) => {
     res.render('index', {
         title: 'Главная',
         header_title: 'Услуги разработки, установки и наладки программного обеспечения, консультации',
-        activity_title: 'Деятельность разработчиков программного обеспечения',
-        activities: developer_activities
+        activities: acitvityes
     });
 });
+
+app.get('/about', (req, res) =>{
+
+    res.render('about', {
+        title: "О нас",
+        header_title: 'Услуги разработки, установки и наладки программного обеспечения, консультации',
+        about : about
+    })
+})
 
 app.post('/quest', (req, res) => {
     console.log(req.body);
