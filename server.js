@@ -10,19 +10,16 @@ const port = 80;
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
-
-// Регистрация частичных шаблонов
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
-// Регистрация хелпера eq
+
 hbs.registerHelper('eq', function (a, b) {
     return a === b;
 });
 
-// Статические файлы
 app.use(express.static('static'));
+app.use(express.json()); 
 
-// Данные
 const acitvityes = {
     title: 'Деятельность разработчиков программного обеспечения',
     list: [
@@ -99,7 +96,7 @@ const offices = [
 const about = {
     company: {
         title: 'О нас',
-        first_tex_entry: 'Мы – команда профессионалов, объединенных общей целью: предоставление высококачественных IT-услуг для бизнеса и частных клиентов. Наша компания специализируется на разработке программного обеспечения, установке и настройке систем, а также интеграции сторонних сервисов.',
+        first_text_entry: 'Мы – команда профессионалов, объединенных общей целью: предоставление высококачественных IT-услуг для бизнеса и частных клиентов. Наша компания специализируется на разработке программного обеспечения, установке и настройке систем, а также интеграции сторонних сервисов.',
         second_text_entry: 'Мы гордимся тем, что можем предложить уникальные решения, отвечающие самым высоким стандартам качества и безопасности. Наша команда имеет богатый опыт в различных областях IT и использует передовые технологии для достижения наилучших результатов.'
     },
     employers: {
@@ -191,7 +188,7 @@ const services = {
     }
 };
 
-// Роуты
+
 app.get('/', (req, res) => {
     res.render('index', {
         title: 'Главная',
@@ -217,6 +214,17 @@ app.get('/services', (req, res) => {
         services: services,
         current_path: req.path
     });
+});
+
+app.get('/chat', (req, res) => {
+    res.render('chat');
+});
+
+app.post('/chat', (req, res) => {
+    console.log(req);
+    const serverReply = '';
+
+    res.json({ reply: serverReply });
 });
 
 app.post('/quest', (req, res) => {
