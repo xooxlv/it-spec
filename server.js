@@ -232,6 +232,15 @@ app.post('/quest', (req, res) => {
     res.send('Заявка принята!');
 });
 
+app.get('/card', (req, res) => {
+    res.render('card', {
+        title: 'Услуги',
+        header_title: 'Услуги разработки, установки и наладки программного обеспечения, консультации',
+        acitvity: acitvityes,
+    });
+
+})
+
 app.listen(port, host, function () {
     console.log(`Server listens http://${host}:${port}`);
 });
