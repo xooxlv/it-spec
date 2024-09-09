@@ -1,9 +1,13 @@
+
 header, footer {
-    color: white;
-    background: url(../img/abstract.jpg);
+	color: white;
+    background: url(../img/back.gif);
     background-size: cover;
-    background-blend-mode: overlay;
     padding: 60px 0;
+}
+footer::before {
+    background: inherit;
+    z-index: -1;
 }
 
 .big-title {
