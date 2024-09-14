@@ -2,7 +2,7 @@
 header, footer {
 	color: white;
     background: url(../img/back.gif);
-    background-size: cover;
+    /* background-size: cover; */
     padding: 60px 0;
 }
 footer::before {
