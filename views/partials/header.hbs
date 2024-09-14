@@ -1,9 +1,17 @@
 <header class="bg-dark py-3">
   <nav class="navbar navbar-expand-lg navbar-dark container" id="navbar">
     <a class="navbar-brand" href="#">
-      <img src="https://static.tildacdn.com/tild6163-6632-4530-b836-353966396362/Group_7120.svg" alt="">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <img src="img/logo.png" alt="">
+        </li>
+        <li class="nav-item pt-3">
+          <h3>IT Spec</h3>
+        </li>
+      </ul>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -31,7 +39,7 @@
     </div>
     <div class="row">
       <div class="col-12 mb-5">
-        <a class="btn btn-primary site-btn mb-5" href="#">Получить консультацию</a>
+        <button class="site-btn mb-5" onclick="get_consult()">Получить консультацию</button>
       </div>
     </div>
   </div>
