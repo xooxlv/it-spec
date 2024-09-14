@@ -1,0 +1,26 @@
+<header class="bg-dark py-3">
+  <nav class="navbar navbar-expand-lg navbar-dark container" id="navbar">
+    <a class="navbar-brand" href="#">
+      <img src="https://static.tildacdn.com/tild6163-6632-4530-b836-353966396362/Group_7120.svg" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link {{#if (eq current_path '/')}}active{{/if}}" href="/">Главная</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if (eq current_path '/services')}}active{{/if}}" href="/services">Услуги</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if (eq current_path '/about')}}active{{/if}}" href="/about">О нас</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link dropdown-item" href="#ftr">Контакты</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
