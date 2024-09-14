@@ -16,14 +16,22 @@ footer::before {
 
 .site-btn {
     animation: fadeIn 2s ease-in forwards;
-    width: 220px;
-    border-radius: 0.375rem;
+    width: 20rem;
+    border-radius: 2rem;
     display: flex;
     margin: 30px auto;
     transition: all 0.3s ease;
     text-transform: uppercase;
     cursor: pointer;
     text-align: center;
+    padding: 10px 20px;
+    border: none; /* Убирает стандартный бордер кнопки */
+    color: #fff; /* Цвет текста */
+    background-color: #007bff; /* Цвет фона */
+}
+
+.site-btn:hover {
+    background-color: #0056b3; /* Цвет фона при наведении */
 }
 
 @keyframes fadeIn {

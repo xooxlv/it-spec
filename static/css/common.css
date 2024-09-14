@@ -1,5 +1,13 @@
+@font-face {
+    font-family: 'TurismoCF-100';
+    src: url('/fonts/TurismoCF-100.woff2') format('woff2'),
+         url('/fonts/TurismoCF-100.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html,body {
-	font-family: 'TurismoCF', sans-serif
+	font-family: 'TurismoCF-100', sans-serif;
 }
 
 .btn {
