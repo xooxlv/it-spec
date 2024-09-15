@@ -258,17 +258,33 @@ app.get('/card/:cardId', (req, res) => {
 
 });
 
-app.post('/quest', (req, res) => {
-    res.status(200).send('Форма успешно отправлена');
-
-});
-
-app.post('/appeal', upload.single('attachment'), (req, res) => {
-    const { name, email, phone, task } = req.body;
-    const attachment = req.file;
-    console.log(req.body);
+app.post('/quest', async (req, res) => {
+    try {
+      const { name, phone } = req.body;
   
-    res.status(200).send('Форма успешно отправлена');
+      // Create a new appeal record
+      const appeal = await Appeal.create({ name, phone });
+  
+      res.status(201).json({ message: 'Форма успешно отправлена', appeal });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Ошибка при отправке формы' });
+    }
+  });
+  
+  app.post('/appeal', upload.single('attachment'), async (req, res) => {
+    try {
+      const { name, email, phone, task } = req.body;
+      const attachment = req.file;
+  
+      // Create a new appeal record
+      const appeal = await Appeal.create({ name, email, phone, task, attachment });
+  
+      res.status(201).json({ message: 'Форма успешно отправлена', appeal });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Ошибка при отправке формы' });
+    }
   });
 
 app.listen(port, host, function () {
