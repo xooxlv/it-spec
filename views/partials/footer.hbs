@@ -29,19 +29,19 @@
             248000, Калужская область, г. Калуга, пер. Старообрядческий, дом 9, офис 176
           </div>
         </div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-4 col-sm-12" id="send">
           <h2>Остались вопросы?</h2>
-          <form action="/quest" method="post" onsubmit="submitForm(event)">
-            <div class="mb-3">
-              <input type="text" class="form-control" id="name" placeholder="Вашe имя" required>
-            </div>
-            <div class="mb-3">
-              <input type="tel" id="phone" class="form-control" name="phone" placeholder="+7 (999) 999-99-99"
-                required />
-            </div>
-            <input type="submit" value="Оставить заявку" class="btn btn-primary">
 
+          <form action="/quest" method="post">
+            <div class="mb-3">
+              <input type="text" class="form-control" id="name" name="name" placeholder="Ваше имя" required>
+            </div>
+            <div class="mb-3">
+              <input type="tel" id="phone" class="form-control" name="phone" placeholder="+7 (999) 999-99-99" required>
+            </div>
           </form>
+
+          <button type="button" class="btn btn-primary">Отправить заявку</button>
 
         </div>
       </div>
