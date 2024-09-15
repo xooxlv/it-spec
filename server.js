@@ -3,10 +3,13 @@ const fs = require('fs');
 const hbs = require('hbs');
 const path = require('path');
 const { title } = require('process');
+const multer = require('multer');
 
 const app = express();
 const host = '127.0.0.1';
 const port = 80;
+
+const upload = multer({ dest: 'uploads/' });
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -135,16 +138,28 @@ const services = {
                 name: 'Облачные решения',
                 about: 'Консультации по внедрению и оптимизации облачных сервисов для повышения гибкости и уменьшения затрат'
             },
+            { 
+                img: 'img/scale_1200.jfif', 
+                name: 'Цифровая трансформация', 
+                about: 'Консультации по внедрению цифровых технологий для повышения производительности, автоматизации процессов и инноваций в бизнесе' 
+            },
             {
                 img: 'img/cybersecurity.webp',
                 name: 'Кибербезопасность',
                 about: 'Оценка и укрепление безопасности данных и систем для защиты от киберугроз и атак'
             },
+            { 
+                img: 'img/strat.jpg', 
+                name: 'Стратегия развития IT', 
+                about: 'Разработка и реализация стратегий развития IT-инфраструктуры, направленных на достижение бизнес-целей и поддержание конкурентного преимущества' 
+            },
+
             {
                 img: 'img/it_consulting.webp',
                 name: 'IT-консалтинг',
                 about: 'Анализ и улучшение существующей IT-инфраструктуры для достижения максимальной эффективности и безопасности'
-            }
+            },
+
         ]
     },
     paid: {
@@ -233,22 +248,6 @@ app.get('/services', (req, res) => {
     });
 });
 
-app.get('/chat', (req, res) => {
-    res.render('chat');
-});
-
-app.post('/chat', (req, res) => {
-    console.log(req);
-    const serverReply = '';
-
-    res.json({ reply: serverReply });
-});
-
-app.post('/quest', (req, res) => {
-    console.log(req.body);
-    res.send('Заявка принята!');
-});
-
 app.get('/card/:cardId', (req, res) => {
     cardId = req.params.cardId;
     res.render('card', {
@@ -257,7 +256,20 @@ app.get('/card/:cardId', (req, res) => {
         activity: acitvityes['list'][cardId],
     });
 
-})
+});
+
+app.post('/quest', (req, res) => {
+    res.status(200).send('Форма успешно отправлена');
+
+});
+
+app.post('/appeal', upload.single('attachment'), (req, res) => {
+    const { name, email, phone, task } = req.body;
+    const attachment = req.file;
+    console.log(req.body);
+  
+    res.status(200).send('Форма успешно отправлена');
+  });
 
 app.listen(port, host, function () {
     console.log(`Server listens http://${host}:${port}`);
