@@ -1,4 +1,3 @@
-{{> toasts }}
 <footer data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="0" class="bg-dark py-3" tabindex="0" id="ftr">
   <div class="container">
     <div class="row">
@@ -33,16 +32,15 @@
         <div class="col-md-4 col-sm-12" id="send">
           <h2>Остались вопросы?</h2>
 
-          <form action="/quest" method="post">
+          <form id="contact-form">
             <div class="mb-3">
               <input type="text" class="form-control" id="name" name="name" placeholder="Ваше имя" required>
             </div>
             <div class="mb-3">
               <input type="tel" id="phone" class="form-control" name="phone" placeholder="+7 (999) 999-99-99" required>
             </div>
+            <button type="submit" class="btn btn-primary">Отправить заявку</button>
           </form>
-
-          <button type="button" class="btn btn-primary">Отправить заявку</button>
 
         </div>
       </div>
@@ -51,3 +49,62 @@
 </footer>
 
 
+<!-- Сообщения об успешной отправке и об ошибке -->
+<div class="position-fixed top-0 end-0 p-5" style="z-index: 1050">
+    <div id="success-message" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Успешно!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Заявка успешно отправлена
+        </div>
+    </div>
+    <div id="error-message" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Ошибка!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Произошла ошибка при отправке заявки, попробуйте еще раз
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Предотвратить стандартное отправление формы
+
+  // Получение данных формы
+  const formData = new FormData(this);
+
+  // Преобразование данных формы в JSON
+  const data = {};
+  formData.forEach((value, key) => {
+    data[key] = value;
+  });
+
+  // Отправка данных на сервер
+  fetch('/quest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json()) // Преобразование ответа в JSON
+  .then(data => {
+    console.log('Success:', data);
+    // Показать toast с успешным сообщением
+    const successToast = new bootstrap.Toast(document.getElementById('success-message'));
+    successToast.show();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    // Показать toast с сообщением об ошибке
+    const errorToast = new bootstrap.Toast(document.getElementById('error-message'));
+    errorToast.show();
+  });
+});
+</script>

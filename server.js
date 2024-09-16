@@ -263,9 +263,9 @@ app.get('/card/:cardId', (req, res) => {
 
 app.post('/quest', async (req, res) => {
     try {
+
         const { name, phone } = req.body;
         console.log(req.body);
-        return;
 
         const appeal = await Appeal.create({ name, phone });
 
