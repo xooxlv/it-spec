@@ -9,28 +9,33 @@
       </div>
       <div class="row">
         <div class="col-md-6 col-sm-12">
-          <h2 class="text-white">Контакты:</h2>
-          <div class="fs-4 mb-1">ООО "IT-СПЕЦАВТОМАТИКА"</div>
-          <div class="fs-4 mb-1">ИНН 4027134030</div>
-          <div class="fs-4 mb-1">
-            <i class="bi bi-telegram"></i>
-            <i class="bi bi-whatsapp"></i>
-          </div>
-          <div class="fs-4 mb-1">
+          <div class="fs-4 mb-3">Контакты:</div>
+          <div class="fs-10 mb-1">ООО "РД-СПЕЦАВТОМАТИКА"</div>
+          <div class="fs-10 mb-1">ИНН 4027134030</div>
+
+          <div class="fs-10 mb-1">
             <i class="bi bi-envelope"></i>
-            info@itspec.ru
+            info@rdspec.ru
           </div>
-          <div class="fs-4 mb-1">
+          <div class="fs-10 mb-1">
             <i class="bi bi-telephone"></i>
             8(800) 250 29 88
           </div>
-          <div class="fs-4 mb-1">
+          <div class="fs-10 mb-1">
             <i class="bi bi-geo-alt"></i>
             248000, Калужская область, г. Калуга, пер. Старообрядческий, дом 9, офис 176
           </div>
+
+          <div class="fs-10 mb-1">
+            <i class="bi fs-5 bi-telegram">
+            </i>
+            <i class="bi fs-5 bi-whatsapp"></i>
+          </div>
         </div>
+
+
         <div class="col-md-4 col-sm-12" id="send">
-          <h2>Остались вопросы?</h2>
+          <div class="fs-4 mb-3">Остались вопросы?</div>
 
           <form id="contact-form">
             <div class="mb-3">
@@ -51,60 +56,60 @@
 
 <!-- Сообщения об успешной отправке и об ошибке -->
 <div class="position-fixed top-0 end-0 p-5" style="z-index: 1050">
-    <div id="success-message" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Успешно!</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Заявка успешно отправлена
-        </div>
+  <div id="success-message" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Успешно!</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    <div id="error-message" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Ошибка!</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Произошла ошибка при отправке заявки, попробуйте еще раз
-        </div>
+    <div class="toast-body">
+      Заявка успешно отправлена
     </div>
+  </div>
+  <div id="error-message" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Ошибка!</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Произошла ошибка при отправке заявки, попробуйте еще раз
+    </div>
+  </div>
 </div>
 
 
 <script>
-document.getElementById('contact-form').addEventListener('submit', function(event) {
-  event.preventDefault(); // Предотвратить стандартное отправление формы
+  document.getElementById('contact-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Предотвратить стандартное отправление формы
 
-  // Получение данных формы
-  const formData = new FormData(this);
+    // Получение данных формы
+    const formData = new FormData(this);
 
-  // Преобразование данных формы в JSON
-  const data = {};
-  formData.forEach((value, key) => {
-    data[key] = value;
+    // Преобразование данных формы в JSON
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+
+    // Отправка данных на сервер
+    fetch('/quest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json()) // Преобразование ответа в JSON
+      .then(data => {
+        console.log('Success:', data);
+        // Показать toast с успешным сообщением
+        const successToast = new bootstrap.Toast(document.getElementById('success-message'));
+        successToast.show();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Показать toast с сообщением об ошибке
+        const errorToast = new bootstrap.Toast(document.getElementById('error-message'));
+        errorToast.show();
+      });
   });
-
-  // Отправка данных на сервер
-  fetch('/quest', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json()) // Преобразование ответа в JSON
-  .then(data => {
-    console.log('Success:', data);
-    // Показать toast с успешным сообщением
-    const successToast = new bootstrap.Toast(document.getElementById('success-message'));
-    successToast.show();
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-    // Показать toast с сообщением об ошибке
-    const errorToast = new bootstrap.Toast(document.getElementById('error-message'));
-    errorToast.show();
-  });
-});
 </script>

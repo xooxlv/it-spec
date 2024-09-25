@@ -5,7 +5,6 @@ const sequelize = new Sequelize('postgres', 'postgres', 'root', {
   dialect: 'postgres',
 });
 
-
 const Appeal = sequelize.define('Appeal', {
     id: {
       type: DataTypes.INTEGER,
@@ -41,12 +40,17 @@ const Appeal = sequelize.define('Appeal', {
         notEmpty : true,
       }
     },
+    is_sent: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     attachment: {
       type: DataTypes.STRING,
       allowNull: true,
     }
   }, {
-    tableName: 'appeals',
+    tableName: 'apeal',
     createdAt: 'created_at',
     updatedAt: false,
   });

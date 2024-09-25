@@ -2,7 +2,6 @@
 header, footer {
 	color: white;
     background: url(../img/back.gif);
-    /* background-size: cover; */
     padding: 60px 0;
 }
 footer::before {
@@ -14,6 +13,9 @@ footer::before {
     animation: fadeIn 2s ease-in forwards;
 }
 
+.navbar-toggler {
+    z-index: 10000;
+}
 .site-btn {
     animation: fadeIn 2s ease-in forwards;
     width: 20rem;
