@@ -4,13 +4,15 @@ const hbs = require('hbs');
 const path = require('path');
 const { title } = require('process');
 const multer = require('multer');
-
+const { body, validationResult } = require('express-validator'); 
+const https = require('https');
 const db = require('./db')
 const Appeal = db.Appeal
 
 const app = express();
-const host = '95.163.228.10';
-const port = 80;
+const host = '127.0.0.1';
+const httpPort = 80;
+const httpsPort = 443;
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -19,6 +21,17 @@ app.set('views', path.join(__dirname, 'views'));
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 hbs.registerPartials(path.join(__dirname, 'views/other'));
 
+const sslOptions = {
+    key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
+  };
+
+const csrf = require('csurf');
+
+const csrfProtection = csrf({ cookie: true });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 hbs.registerHelper('eq', function (a, b) {
     return a === b;
@@ -92,17 +105,17 @@ const acitvityes = {
 
 const persons = [
     {
-        'name': 'Иван Иванов',
+        'name': 'Великий Владислав',
         'about': 'CEO. Специализируется на стратегии и управлении проектами. Опыт более 15 лет в IT-сфере.',
         'img': 'img/seo.png'
     },
     {
-        'name': 'Анна Смирнова',
+        'name': 'Великий Владислав',
         'about': 'Технический директор. Эксперт в разработке программного обеспечения и архитектуре систем. Более 10 лет опыта.',
         'img': 'img/proger_women.png'
     },
     {
-        'name': 'Сергей Петров',
+        'name': 'Великий Владислав',
         'about': 'Главный разработчик. Специализируется на веб-технологиях и интеграции систем. Опыт работы более 8 лет.',
         'img': 'img/main_proger.png'
     }
@@ -261,12 +274,24 @@ app.get('/card/:cardId', (req, res) => {
 
 });
 
-app.post('/quest', async (req, res) => {
+
+// Маршрут для обработки запросов без файла
+app.post('/quest', csrfProtection, [
+    // Валидация данных
+    body('name').trim().isLength({ min: 1 }).escape().withMessage('Имя обязательно'),
+    body('phone').trim().isMobilePhone('ru-RU').withMessage('Введите корректный номер телефона')
+], async (req, res) => {
     try {
+        // Проверка на наличие ошибок в валидации
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
         const { name, phone } = req.body;
         console.log(req.body);
 
+        // Сохранение данных
         const appeal = await Appeal.create({ name, phone });
 
         res.status(200).json({
@@ -279,16 +304,33 @@ app.post('/quest', async (req, res) => {
     }
 });
 
-app.post('/appeal', upload.single('attachment'), async (req, res) => {
+// Маршрут для обработки запросов с файлом
+app.post('/appeal', csrfProtection, upload.single('attachment'), [
+    body('name').trim().isLength({ min: 1 }).escape().withMessage('Имя обязательно'),
+    body('email').isEmail().withMessage('Введите корректный email'),
+    body('phone').trim().isMobilePhone('ru-RU').withMessage('Введите корректный номер телефона'),
+    body('task').trim().isLength({ min: 1 }).escape().withMessage('Описание задачи обязательно')
+], async (req, res) => {
     try {
+        // Проверка валидации
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         const { name, email, phone, task } = req.body;
         const attachment = req.file ? req.file.path : null;
 
+        // Ограничение размера файла (например, до 5MB)
+        if (req.file && req.file.size > 5 * 1024 * 1024) {
+            return res.status(400).json({ error: 'Размер файла слишком большой' });
+        }
+
+        // Сохранение данных
         const appeal = await Appeal.create({ name, email, phone, task, attachment });
 
         res.status(200).json({
-            message: 'OK',
-
+            message: 'OK'
         });
     } catch (error) {
         console.error(error);
@@ -299,3 +341,14 @@ app.post('/appeal', upload.single('attachment'), async (req, res) => {
 app.listen(port, host, function () {
     console.log(`Server listens http://${host}:${port}`);
 });
+
+// https.createServer(sslOptions, app).listen(httpsPort, host, () => {
+//     console.log(`Server listens https://${host}:${httpsPort}`);
+//   });
+  
+//   http.createServer((req, res) => {
+//     res.writeHead(301, { 'Location': `https://${host}${req.url}` });
+//     res.end();
+//   }).listen(httpPort, host, () => {
+//     console.log(`Server listens http://${host}:${httpPort} and redirects to https`);
+//   });
