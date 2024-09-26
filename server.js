@@ -9,7 +9,7 @@ const db = require('./db')
 const Appeal = db.Appeal
 
 const app = express();
-const host = '127.0.0.1';
+const host = '95.163.228.10';
 const port = 80;
 
 const upload = multer({ dest: 'uploads/' });
